@@ -1,0 +1,68 @@
+input: startDate(20110101, "開始日期");
+input: days(1, "預期上漲日期");
+
+var: forcastValue(0);
+
+setfirstbardate(startDate);
+
+if currentbar <= days + 5 then return;
+if date = currentdate then return;  // 忽略最新一筆(盤中執行時無法知道最後漲跌幅)
+
+once(true)
+begin
+    print(file("[ScriptName].arff"),
+        "@RELATION demo"
+    );
+    print(file("[ScriptName].arff"),
+        "@ATTRIBUTE f1 NUMERIC"
+    );
+    print(file("[ScriptName].arff"),
+        "@ATTRIBUTE f2 NUMERIC"
+    );
+    print(file("[ScriptName].arff"),
+        "@ATTRIBUTE f3 NUMERIC"
+    );
+    print(file("[ScriptName].arff"),
+        "@ATTRIBUTE f4 NUMERIC"
+    );
+    print(file("[ScriptName].arff"),
+        "@ATTRIBUTE f5 NUMERIC"
+    );
+    print(file("[ScriptName].arff"),
+        "@ATTRIBUTE f6 NUMERIC"
+    );
+    print(file("[ScriptName].arff"),
+        "@ATTRIBUTE class {-1,0,1}"
+    );
+    print(file("[ScriptName].arff"),
+        "@DATA"
+    );
+end;
+
+value1 = callfunction("rule_外資買賣超金額")[days];
+value2 = callfunction("rule_外資買賣超金額")[days+1];
+value3 = callfunction("rule_外資買賣超金額")[days+2];
+value4 = callfunction("rule_漲跌幅")[days];
+value5 = callfunction("rule_漲跌幅")[days+1];
+value6 = callfunction("rule_漲跌幅")[days+2];
+
+// forcastValue目前先設定成-1,0,1
+//
+value999 = rateofchange(close, days);
+if value999 > 0 then forcastValue = 1;
+if value999 < 0 then forcastValue = -1;
+if value999 = 0 then forcastValue = 0;
+
+print(
+  file("[ScriptName].arff"),
+  text(
+    numtostr(value1, 0), ",",
+    numtostr(value2, 0), ",",
+    numtostr(value3, 0), ",",
+    numtostr(value4, 0), ",",
+    numtostr(value5, 0), ",",
+    numtostr(value6, 0), ",",
+    numtostr(forcastValue, 0)
+  )
+);
+

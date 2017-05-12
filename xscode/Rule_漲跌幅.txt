@@ -1,0 +1,2 @@
+value1 = rateofchange(close, 1);
+retval = IntPortion(value1 / 0.5) * 5;
