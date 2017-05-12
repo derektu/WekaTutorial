@@ -2,6 +2,8 @@
 
 我們使用[Weka](http://www.cs.waikato.ac.nz/ml/weka/)這個系統以及XS來說明如何運用機器學習的方式來計算多種腳本條件合併的勝率。
 
+## XS腳本
+
 首先請大家看一下底下的警示腳本:
 
 ```
@@ -84,7 +86,6 @@ print(
 
 ```
 value1 = GetField("外資買賣超金額");
-
 retval = IntPortion(value1 / 1000000000)*10;    // 每10億一等級
 ```
 
@@ -120,5 +121,15 @@ retval = IntPortion(value1 / 0.5) * 5;
 ...
 ```
 
-有了這個檔案之後, 接下來我們就可以使用weka來分析這個資料了
+有了這個檔案之後, 接下來我們就可以使用weka來分析這個資料了.
+
+## Weka操作
+
+首先打開weka程式, 點選[Explorer按鈕](https://cloud.githubusercontent.com/assets/522142/25990736/6a6ec90a-3733-11e7-9ede-5a60195c9db1.png), 然後在Preprocess這個tab內點選[Open file...](https://cloud.githubusercontent.com/assets/522142/25990936/1ee8da56-3734-11e7-8a90-98e7c2a5fd4e.png), 選擇剛剛XS產生的arff檔案.
+
+
+
+
+
+
 
